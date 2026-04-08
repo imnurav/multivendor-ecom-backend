@@ -1,0 +1,740 @@
+generator client {
+  provider = "prisma-client"
+  url      = env("DATABASE_URL")
+  output   = "../src/generated/prisma"
+}
+
+// Recommended future flow after schema changes:
+// Edit schema.prisma
+// Run npm run db:validate
+// Run npm run db:migrate -- --name your_change_name
+// Run npm run db:generate
+// I also ran db:validate and db:generate now; both passed.
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum VendorStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum ProductStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum CartStatus {
+  ACTIVE
+  CONVERTED
+  ABANDONED
+  EXPIRED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CARD
+  UPI
+  NETBANKING
+  WALLET
+  COD
+  BANK_TRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  SUCCESS
+  FAILED
+  CANCELLED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum LedgerAccountType {
+  VENDOR
+  PLATFORM
+}
+
+enum LedgerEntryType {
+  ORDER_EARNING
+  COMMISSION
+  REFUND_REVERSAL
+  COMMISSION_REVERSAL
+  WITHDRAWAL
+  ADJUSTMENT
+}
+
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PROCESSING
+  COMPLETED
+}
+
+enum AddressType {
+  SHIPPING
+  BILLING
+  PICKUP
+}
+
+enum ShipmentStatus {
+  PENDING
+  PICKUP_SCHEDULED
+  SHIPPED
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  FAILED
+  RETURNED
+}
+
+enum RefundStatus {
+  REQUESTED
+  APPROVED
+  REJECTED
+  PICKUP_SCHEDULED
+  RECEIVED
+  REFUNDED
+  CANCELLED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum NotificationType {
+  ORDER_CREATED
+  ORDER_CONFIRMED
+  ORDER_SHIPPED
+  ORDER_DELIVERED
+  PAYMENT_SUCCESS
+  PAYMENT_FAILED
+  REFUND_REQUESTED
+  REFUND_COMPLETED
+  WITHDRAWAL_REQUESTED
+  WITHDRAWAL_COMPLETED
+  REVIEW_RECEIVED
+  SYSTEM_ALERT
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+enum NotificationChannel {
+  EMAIL
+  SMS
+  PUSH
+  IN_APP
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  phone        String?
+  isActive     Boolean  @default(true)
+  isVerified   Boolean  @default(false)
+  roleId       String
+  role         Role     @relation(fields: [roleId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  tenantId     String?
+
+  filesUploaded       File[]
+  carts               Cart[]
+  orders              Order[]
+  addresses           Address[]
+  refundRequests      RefundRequest[]
+  reviews             Review[]
+  reviewVotes         ReviewVote[]
+  notificationTargets NotificationRecipient[] @relation("NotificationRecipientUser")
+  vendor              Vendor?
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  users       User[]
+  createdAt   DateTime @default(now())
+
+  rolePermissions RolePermission[]
+}
+
+model Permission {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  rolePermissions RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+model Setting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  type        String
+  group       String
+  isPublic    Boolean  @default(false)
+  description String?
+  tenantId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model File {
+  id           String   @id @default(uuid())
+  originalName String
+  mimeType     String
+  size         Int
+  provider     String
+  path         String
+  url          String
+  uploadedById String?
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id])
+  meta         Json?
+  tenantId     String?
+  createdAt    DateTime @default(now())
+
+  vendorLogos    Vendor[]   @relation("VendorLogo")
+  vendorBanners  Vendor[]   @relation("VendorBanner")
+  categoryImages Category[]
+}
+
+model Vendor {
+  id             String       @id @default(uuid())
+  userId         String       @unique
+  user           User         @relation(fields: [userId], references: [id])
+  storeName      String
+  storeSlug      String       @unique
+  description    String?
+  logoFileId     String?
+  logo           File?        @relation("VendorLogo", fields: [logoFileId], references: [id])
+  bannerFileId   String?
+  banner         File?        @relation("VendorBanner", fields: [bannerFileId], references: [id])
+  status         VendorStatus
+  commissionRate Float?
+  isVerified     Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  tenantId       String?
+
+  products           Product[]
+  addresses          Address[]
+  ledgerAccounts     LedgerAccount[]
+  withdrawalRequests VendorWithdrawalRequest[]
+  shipments          Shipment[]
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String     @unique
+  description String?
+  parentId    String?
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  imageFileId String?
+  image       File?      @relation(fields: [imageFileId], references: [id])
+  isActive    Boolean    @default(true)
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  tenantId    String?
+
+  productCategories ProductCategory[]
+}
+
+model Product {
+  id          String        @id @default(uuid())
+  vendorId    String
+  vendor      Vendor        @relation(fields: [vendorId], references: [id])
+  name        String
+  slug        String        @unique
+  description String?
+  status      ProductStatus
+  isPublished Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  tenantId    String?
+
+  variants               ProductVariant[]
+  productAttributeValues ProductAttributeValue[]
+  productCategories      ProductCategory[]
+}
+
+model ProductVariant {
+  id           String   @id @default(uuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id])
+  name         String?
+  sku          String   @unique
+  barcode      String?
+  price        Decimal
+  comparePrice Decimal?
+  costPrice    Decimal?
+  stock        Int      @default(0)
+  weight       Float?
+  length       Float?
+  width        Float?
+  height       Float?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  tenantId     String?
+
+  cartItems              CartItem[]
+  variantAttributeValues VariantAttributeValue[]
+}
+
+model Attribute {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  isVariant Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tenantId  String?
+
+  values                 AttributeValue[]
+  productAttributeValues ProductAttributeValue[]
+  variantAttributeValues VariantAttributeValue[]
+}
+
+model AttributeValue {
+  id          String    @id @default(uuid())
+  attributeId String
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+  value       String
+  slug        String
+  createdAt   DateTime  @default(now())
+  tenantId    String?
+
+  productAttributeValues ProductAttributeValue[]
+  variantAttributeValues VariantAttributeValue[]
+}
+
+model ProductAttributeValue {
+  id               String         @id @default(uuid())
+  productId        String
+  product          Product        @relation(fields: [productId], references: [id])
+  attributeId      String
+  attribute        Attribute      @relation(fields: [attributeId], references: [id])
+  attributeValueId String
+  attributeValue   AttributeValue @relation(fields: [attributeValueId], references: [id])
+}
+
+model VariantAttributeValue {
+  id               String         @id @default(uuid())
+  variantId        String
+  variant          ProductVariant @relation(fields: [variantId], references: [id])
+  attributeId      String
+  attribute        Attribute      @relation(fields: [attributeId], references: [id])
+  attributeValueId String
+  attributeValue   AttributeValue @relation(fields: [attributeValueId], references: [id])
+}
+
+model ProductCategory {
+  productId  String
+  categoryId String
+  product    Product  @relation(fields: [productId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+  assignedAt DateTime @default(now())
+
+  @@id([productId, categoryId])
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String?
+  user      User?      @relation(fields: [userId], references: [id])
+  sessionId String?
+  status    CartStatus @default(ACTIVE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  tenantId  String?
+
+  items CartItem[]
+}
+
+model CartItem {
+  id        String         @id @default(uuid())
+  cartId    String
+  cart      Cart           @relation(fields: [cartId], references: [id])
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id])
+  quantity  Int
+  price     Decimal
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  orderNumber    String      @unique
+  userId         String
+  user           User        @relation(fields: [userId], references: [id])
+  status         OrderStatus
+  subtotalAmount Decimal
+  discountAmount Decimal     @default(0)
+  taxAmount      Decimal     @default(0)
+  shippingAmount Decimal     @default(0)
+  totalAmount    Decimal
+  currency       String
+  notes          String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  tenantId       String?
+
+  items          OrderItem[]
+  statusHistory  OrderStatusHistory[]
+  payments       Payment[]
+  refunds        RefundRequest[]
+  orderAddresses OrderAddress[]
+  shipments      Shipment[]
+}
+
+model OrderItem {
+  id          String   @id @default(uuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  productId   String
+  variantId   String
+  productName String
+  variantName String?
+  sku         String?
+  quantity    Int
+  price       Decimal
+  totalPrice  Decimal
+  vendorId    String
+  createdAt   DateTime @default(now())
+
+  shipmentItems ShipmentItem[]
+  refundItems   RefundItem[]
+}
+
+model OrderStatusHistory {
+  id        String      @id @default(uuid())
+  orderId   String
+  order     Order       @relation(fields: [orderId], references: [id])
+  status    OrderStatus
+  changedBy String?
+  createdAt DateTime    @default(now())
+}
+
+model Payment {
+  id          String        @id @default(uuid())
+  orderId     String
+  order       Order         @relation(fields: [orderId], references: [id])
+  provider    String
+  method      PaymentMethod
+  amount      Decimal
+  currency    String
+  status      PaymentStatus
+  providerRef String?
+  metadata    Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  tenantId    String?
+
+  transactions PaymentTransaction[]
+}
+
+model PaymentTransaction {
+  id              String        @id @default(uuid())
+  paymentId       String
+  payment         Payment       @relation(fields: [paymentId], references: [id])
+  providerTxnRef  String?
+  status          PaymentStatus
+  requestPayload  Json?
+  responsePayload Json?
+  createdAt       DateTime      @default(now())
+}
+
+model LedgerAccount {
+  id          String            @id @default(uuid())
+  vendorId    String?
+  vendor      Vendor?           @relation(fields: [vendorId], references: [id])
+  accountType LedgerAccountType
+  currency    String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  tenantId    String?
+
+  entries LedgerEntry[]
+}
+
+model LedgerEntry {
+  id          String          @id @default(uuid())
+  accountId   String
+  account     LedgerAccount   @relation(fields: [accountId], references: [id])
+  orderId     String?
+  paymentId   String?
+  refundId    String?
+  type        LedgerEntryType
+  amount      Decimal
+  currency    String
+  description String?
+  createdAt   DateTime        @default(now())
+  tenantId    String?
+}
+
+model VendorWithdrawalRequest {
+  id            String           @id @default(uuid())
+  vendorId      String
+  vendor        Vendor           @relation(fields: [vendorId], references: [id])
+  amount        Decimal
+  currency      String
+  status        WithdrawalStatus
+  requestedAt   DateTime         @default(now())
+  processedAt   DateTime?
+  processedById String?
+  referenceNote String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  tenantId      String?
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  vendorId   String?
+  vendor     Vendor?  @relation(fields: [vendorId], references: [id])
+  label      String?
+  name       String
+  phone      String
+  line1      String
+  line2      String?
+  city       String
+  state      String
+  postalCode String
+  country    String
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  tenantId   String?
+}
+
+model OrderAddress {
+  id         String      @id @default(uuid())
+  orderId    String
+  order      Order       @relation(fields: [orderId], references: [id])
+  type       AddressType
+  name       String
+  phone      String
+  line1      String
+  line2      String?
+  city       String
+  state      String
+  postalCode String
+  country    String
+  createdAt  DateTime    @default(now())
+  tenantId   String?
+}
+
+model Shipment {
+  id               String         @id @default(uuid())
+  orderId          String
+  order            Order          @relation(fields: [orderId], references: [id])
+  vendorId         String
+  vendor           Vendor         @relation(fields: [vendorId], references: [id])
+  shippingProvider String?
+  trackingNumber   String?
+  status           ShipmentStatus
+  shippedAt        DateTime?
+  deliveredAt      DateTime?
+  metadata         Json?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  tenantId         String?
+
+  items         ShipmentItem[]
+  statusHistory ShipmentStatusHistory[]
+}
+
+model ShipmentItem {
+  id          String    @id @default(uuid())
+  shipmentId  String
+  shipment    Shipment  @relation(fields: [shipmentId], references: [id])
+  orderItemId String
+  orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
+  quantity    Int
+  createdAt   DateTime  @default(now())
+  tenantId    String?
+}
+
+model ShipmentStatusHistory {
+  id         String         @id @default(uuid())
+  shipmentId String
+  shipment   Shipment       @relation(fields: [shipmentId], references: [id])
+  status     ShipmentStatus
+  createdAt  DateTime       @default(now())
+  tenantId   String?
+}
+
+model RefundRequest {
+  id            String       @id @default(uuid())
+  orderId       String
+  order         Order        @relation(fields: [orderId], references: [id])
+  userId        String
+  user          User         @relation(fields: [userId], references: [id])
+  reason        String?
+  status        RefundStatus
+  refundAmount  Decimal?
+  currency      String
+  processedById String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  tenantId      String?
+
+  items         RefundItem[]
+  statusHistory RefundStatusHistory[]
+}
+
+model RefundItem {
+  id          String        @id @default(uuid())
+  refundId    String
+  refund      RefundRequest @relation(fields: [refundId], references: [id])
+  orderItemId String
+  orderItem   OrderItem     @relation(fields: [orderItemId], references: [id])
+  quantity    Int
+  amount      Decimal
+  createdAt   DateTime      @default(now())
+  tenantId    String?
+}
+
+model RefundStatusHistory {
+  id        String        @id @default(uuid())
+  refundId  String
+  refund    RefundRequest @relation(fields: [refundId], references: [id])
+  status    RefundStatus
+  createdAt DateTime      @default(now())
+  tenantId  String?
+}
+
+model Review {
+  id        String       @id @default(uuid())
+  userId    String
+  user      User         @relation(fields: [userId], references: [id])
+  productId String?
+  vendorId  String?
+  orderId   String?
+  rating    Int
+  title     String?
+  comment   String?
+  status    ReviewStatus
+  verified  Boolean      @default(false)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  tenantId  String?
+
+  media ReviewMedia[]
+  votes ReviewVote[]
+}
+
+model ReviewMedia {
+  id        String   @id @default(uuid())
+  reviewId  String
+  review    Review   @relation(fields: [reviewId], references: [id])
+  fileId    String
+  createdAt DateTime @default(now())
+  tenantId  String?
+}
+
+model ReviewVote {
+  id        String   @id @default(uuid())
+  reviewId  String
+  review    Review   @relation(fields: [reviewId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  isHelpful Boolean
+  createdAt DateTime @default(now())
+  tenantId  String?
+}
+
+model Notification {
+  id         String             @id @default(uuid())
+  type       NotificationType
+  title      String
+  message    String
+  entityType String?
+  entityId   String?
+  status     NotificationStatus
+  metadata   Json?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  tenantId   String?
+
+  recipients NotificationRecipient[]
+}
+
+model NotificationRecipient {
+  id             String              @id @default(uuid())
+  notificationId String
+  notification   Notification        @relation(fields: [notificationId], references: [id])
+  userId         String?
+  user           User?               @relation("NotificationRecipientUser", fields: [userId], references: [id])
+  email          String?
+  phone          String?
+  channel        NotificationChannel
+  status         NotificationStatus
+  sentAt         DateTime?
+  createdAt      DateTime            @default(now())
+  tenantId       String?
+
+  logs NotificationLog[]
+}
+
+model NotificationLog {
+  id          String                @id @default(uuid())
+  recipientId String
+  recipient   NotificationRecipient @relation(fields: [recipientId], references: [id])
+  response    Json?
+  createdAt   DateTime              @default(now())
+  tenantId    String?
+}
+
+model NotificationTemplate {
+  id        String              @id @default(uuid())
+  type      NotificationType
+  subject   String?
+  body      String
+  channel   NotificationChannel
+  isActive  Boolean             @default(true)
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  tenantId  String?
+}
