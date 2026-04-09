@@ -1,4 +1,5 @@
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { FilesModule } from './modules/files/files.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { PaymentsModule } from './modules/payments/payments.module';
@@ -26,26 +27,27 @@ import { Module } from '@nestjs/common';
 @Module({
   imports: [
     CoreModule,
-    ConfigModule,
-    DatabaseModule,
+    AuthModule,
+    CartModule,
     RedisModule,
     QueueModule,
-    CommonModule,
     UtilsModule,
-    AuthModule,
+    FilesModule,
     UsersModule,
+    AdminModule,
+    ConfigModule,
+    CommonModule,
+    OrdersModule,
+    SearchModule,
     VendorsModule,
     CatalogModule,
-    InventoryModule,
-    CartModule,
-    OrdersModule,
+    ReviewsModule,
+    DatabaseModule,
     PaymentsModule,
     ShippingModule,
-    NotificationsModule,
-    ReviewsModule,
-    AdminModule,
-    SearchModule,
+    InventoryModule,
     AnalyticsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

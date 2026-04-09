@@ -21,7 +21,7 @@
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
     "db:ensure": "node scripts/ensure-local-db.mjs",
-    "db:setup:local": "npm run db:ensure && npm run db:migrate:deploy && npm run db:generate",
+    "db:setup:local": "yarn db:ensure && yarn db:migrate:deploy && yarn db:generate",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:status": "prisma migrate status",
@@ -30,6 +30,7 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
+    "@imagekit/nodejs": "^7.4.0",
     "@nestjs/bullmq": "^11.0.4",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^4.0.3",
@@ -64,6 +65,7 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
+    "@types/multer": "^2.1.0",
     "@types/node": "^20.3.1",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.0",

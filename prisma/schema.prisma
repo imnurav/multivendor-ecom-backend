@@ -151,9 +151,12 @@ enum NotificationChannel {
 
 model User {
   id           String   @id @default(uuid())
+  name         String?
   email        String   @unique
   passwordHash String
   phone        String?
+  profileImageFileId String?
+  profileImage File?   @relation("UserProfileImage", fields: [profileImageFileId], references: [id])
   isActive     Boolean  @default(true)
   isVerified   Boolean  @default(false)
   roleId       String
@@ -231,6 +234,7 @@ model File {
   vendorLogos    Vendor[]   @relation("VendorLogo")
   vendorBanners  Vendor[]   @relation("VendorBanner")
   categoryImages Category[]
+  userProfileImages User[]  @relation("UserProfileImage")
 }
 
 model Vendor {

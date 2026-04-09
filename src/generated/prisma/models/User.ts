@@ -26,9 +26,11 @@ export type AggregateUser = {
 
 export type UserMinAggregateOutputType = {
   id: string | null
+  name: string | null
   email: string | null
   passwordHash: string | null
   phone: string | null
+  profileImageFileId: string | null
   isActive: boolean | null
   isVerified: boolean | null
   roleId: string | null
@@ -39,9 +41,11 @@ export type UserMinAggregateOutputType = {
 
 export type UserMaxAggregateOutputType = {
   id: string | null
+  name: string | null
   email: string | null
   passwordHash: string | null
   phone: string | null
+  profileImageFileId: string | null
   isActive: boolean | null
   isVerified: boolean | null
   roleId: string | null
@@ -52,9 +56,11 @@ export type UserMaxAggregateOutputType = {
 
 export type UserCountAggregateOutputType = {
   id: number
+  name: number
   email: number
   passwordHash: number
   phone: number
+  profileImageFileId: number
   isActive: number
   isVerified: number
   roleId: number
@@ -67,9 +73,11 @@ export type UserCountAggregateOutputType = {
 
 export type UserMinAggregateInputType = {
   id?: true
+  name?: true
   email?: true
   passwordHash?: true
   phone?: true
+  profileImageFileId?: true
   isActive?: true
   isVerified?: true
   roleId?: true
@@ -80,9 +88,11 @@ export type UserMinAggregateInputType = {
 
 export type UserMaxAggregateInputType = {
   id?: true
+  name?: true
   email?: true
   passwordHash?: true
   phone?: true
+  profileImageFileId?: true
   isActive?: true
   isVerified?: true
   roleId?: true
@@ -93,9 +103,11 @@ export type UserMaxAggregateInputType = {
 
 export type UserCountAggregateInputType = {
   id?: true
+  name?: true
   email?: true
   passwordHash?: true
   phone?: true
+  profileImageFileId?: true
   isActive?: true
   isVerified?: true
   roleId?: true
@@ -179,9 +191,11 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
+  name: string | null
   email: string
   passwordHash: string
   phone: string | null
+  profileImageFileId: string | null
   isActive: boolean
   isVerified: boolean
   roleId: string
@@ -213,15 +227,18 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   phone?: Prisma.StringNullableFilter<"User"> | string | null
+  profileImageFileId?: Prisma.StringNullableFilter<"User"> | string | null
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   roleId?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   tenantId?: Prisma.StringNullableFilter<"User"> | string | null
+  profileImage?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
   filesUploaded?: Prisma.FileListRelationFilter
   carts?: Prisma.CartListRelationFilter
@@ -236,15 +253,18 @@ export type UserWhereInput = {
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  profileImageFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
+  profileImage?: Prisma.FileOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
   filesUploaded?: Prisma.FileOrderByRelationAggregateInput
   carts?: Prisma.CartOrderByRelationAggregateInput
@@ -263,14 +283,17 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
+  name?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringFilter<"User"> | string
   phone?: Prisma.StringNullableFilter<"User"> | string | null
+  profileImageFileId?: Prisma.StringNullableFilter<"User"> | string | null
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   roleId?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   tenantId?: Prisma.StringNullableFilter<"User"> | string | null
+  profileImage?: Prisma.XOR<Prisma.FileNullableScalarRelationFilter, Prisma.FileWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
   filesUploaded?: Prisma.FileListRelationFilter
   carts?: Prisma.CartListRelationFilter
@@ -285,9 +308,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  profileImageFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
@@ -304,9 +329,11 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  profileImageFileId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   roleId?: Prisma.StringWithAggregatesFilter<"User"> | string
@@ -317,6 +344,7 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserCreateInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -325,6 +353,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
@@ -339,9 +368,11 @@ export type UserCreateInput = {
 
 export type UserUncheckedCreateInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -361,6 +392,7 @@ export type UserUncheckedCreateInput = {
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -369,6 +401,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -383,9 +416,11 @@ export type UserUpdateInput = {
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -405,9 +440,11 @@ export type UserUncheckedUpdateInput = {
 
 export type UserCreateManyInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -418,6 +455,7 @@ export type UserCreateManyInput = {
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -430,9 +468,11 @@ export type UserUpdateManyMutationInput = {
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -443,9 +483,11 @@ export type UserUncheckedUpdateManyInput = {
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  profileImageFileId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
@@ -456,9 +498,11 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  profileImageFileId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
@@ -469,9 +513,11 @@ export type UserMaxOrderByAggregateInput = {
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  profileImageFileId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
@@ -564,6 +610,20 @@ export type UserCreateNestedOneWithoutFilesUploadedInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedManyWithoutProfileImageInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileImageInput, Prisma.UserUncheckedCreateWithoutProfileImageInput> | Prisma.UserCreateWithoutProfileImageInput[] | Prisma.UserUncheckedCreateWithoutProfileImageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileImageInput | Prisma.UserCreateOrConnectWithoutProfileImageInput[]
+  createMany?: Prisma.UserCreateManyProfileImageInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutProfileImageInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileImageInput, Prisma.UserUncheckedCreateWithoutProfileImageInput> | Prisma.UserCreateWithoutProfileImageInput[] | Prisma.UserUncheckedCreateWithoutProfileImageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileImageInput | Prisma.UserCreateOrConnectWithoutProfileImageInput[]
+  createMany?: Prisma.UserCreateManyProfileImageInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
 export type UserUpdateOneWithoutFilesUploadedNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutFilesUploadedInput, Prisma.UserUncheckedCreateWithoutFilesUploadedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutFilesUploadedInput
@@ -572,6 +632,34 @@ export type UserUpdateOneWithoutFilesUploadedNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFilesUploadedInput, Prisma.UserUpdateWithoutFilesUploadedInput>, Prisma.UserUncheckedUpdateWithoutFilesUploadedInput>
+}
+
+export type UserUpdateManyWithoutProfileImageNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileImageInput, Prisma.UserUncheckedCreateWithoutProfileImageInput> | Prisma.UserCreateWithoutProfileImageInput[] | Prisma.UserUncheckedCreateWithoutProfileImageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileImageInput | Prisma.UserCreateOrConnectWithoutProfileImageInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutProfileImageInput | Prisma.UserUpsertWithWhereUniqueWithoutProfileImageInput[]
+  createMany?: Prisma.UserCreateManyProfileImageInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutProfileImageInput | Prisma.UserUpdateWithWhereUniqueWithoutProfileImageInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutProfileImageInput | Prisma.UserUpdateManyWithWhereWithoutProfileImageInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutProfileImageNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileImageInput, Prisma.UserUncheckedCreateWithoutProfileImageInput> | Prisma.UserCreateWithoutProfileImageInput[] | Prisma.UserUncheckedCreateWithoutProfileImageInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileImageInput | Prisma.UserCreateOrConnectWithoutProfileImageInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutProfileImageInput | Prisma.UserUpsertWithWhereUniqueWithoutProfileImageInput[]
+  createMany?: Prisma.UserCreateManyProfileImageInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutProfileImageInput | Prisma.UserUpdateWithWhereUniqueWithoutProfileImageInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutProfileImageInput | Prisma.UserUpdateManyWithWhereWithoutProfileImageInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedOneWithoutVendorInput = {
@@ -694,6 +782,7 @@ export type UserUpdateOneWithoutNotificationTargetsNestedInput = {
 
 export type UserCreateWithoutRoleInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -702,6 +791,7 @@ export type UserCreateWithoutRoleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -715,9 +805,11 @@ export type UserCreateWithoutRoleInput = {
 
 export type UserUncheckedCreateWithoutRoleInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
@@ -765,9 +857,11 @@ export type UserScalarWhereInput = {
   OR?: Prisma.UserScalarWhereInput[]
   NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   phone?: Prisma.StringNullableFilter<"User"> | string | null
+  profileImageFileId?: Prisma.StringNullableFilter<"User"> | string | null
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   roleId?: Prisma.StringFilter<"User"> | string
@@ -778,6 +872,7 @@ export type UserScalarWhereInput = {
 
 export type UserCreateWithoutFilesUploadedInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -786,6 +881,7 @@ export type UserCreateWithoutFilesUploadedInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -799,9 +895,11 @@ export type UserCreateWithoutFilesUploadedInput = {
 
 export type UserUncheckedCreateWithoutFilesUploadedInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -823,61 +921,9 @@ export type UserCreateOrConnectWithoutFilesUploadedInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutFilesUploadedInput, Prisma.UserUncheckedCreateWithoutFilesUploadedInput>
 }
 
-export type UserUpsertWithoutFilesUploadedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutFilesUploadedInput, Prisma.UserUncheckedUpdateWithoutFilesUploadedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutFilesUploadedInput, Prisma.UserUncheckedCreateWithoutFilesUploadedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutFilesUploadedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutFilesUploadedInput, Prisma.UserUncheckedUpdateWithoutFilesUploadedInput>
-}
-
-export type UserUpdateWithoutFilesUploadedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
-  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
-  refundRequests?: Prisma.RefundRequestUpdateManyWithoutUserNestedInput
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
-  reviewVotes?: Prisma.ReviewVoteUpdateManyWithoutUserNestedInput
-  notificationTargets?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
-  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutFilesUploadedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roleId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
-  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
-  refundRequests?: Prisma.RefundRequestUncheckedUpdateManyWithoutUserNestedInput
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
-  reviewVotes?: Prisma.ReviewVoteUncheckedUpdateManyWithoutUserNestedInput
-  notificationTargets?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
-  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
-}
-
-export type UserCreateWithoutVendorInput = {
+export type UserCreateWithoutProfileImageInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -895,13 +941,145 @@ export type UserCreateWithoutVendorInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   reviewVotes?: Prisma.ReviewVoteCreateNestedManyWithoutUserInput
   notificationTargets?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutProfileImageInput = {
+  id?: string
+  name?: string | null
+  email: string
+  passwordHash: string
+  phone?: string | null
+  isActive?: boolean
+  isVerified?: boolean
+  roleId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenantId?: string | null
+  filesUploaded?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  refundRequests?: Prisma.RefundRequestUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  reviewVotes?: Prisma.ReviewVoteUncheckedCreateNestedManyWithoutUserInput
+  notificationTargets?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutProfileImageInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutProfileImageInput, Prisma.UserUncheckedCreateWithoutProfileImageInput>
+}
+
+export type UserCreateManyProfileImageInputEnvelope = {
+  data: Prisma.UserCreateManyProfileImageInput | Prisma.UserCreateManyProfileImageInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithoutFilesUploadedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFilesUploadedInput, Prisma.UserUncheckedUpdateWithoutFilesUploadedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFilesUploadedInput, Prisma.UserUncheckedCreateWithoutFilesUploadedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFilesUploadedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFilesUploadedInput, Prisma.UserUncheckedUpdateWithoutFilesUploadedInput>
+}
+
+export type UserUpdateWithoutFilesUploadedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  refundRequests?: Prisma.RefundRequestUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  reviewVotes?: Prisma.ReviewVoteUpdateManyWithoutUserNestedInput
+  notificationTargets?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFilesUploadedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  refundRequests?: Prisma.RefundRequestUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  reviewVotes?: Prisma.ReviewVoteUncheckedUpdateManyWithoutUserNestedInput
+  notificationTargets?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserUpsertWithWhereUniqueWithoutProfileImageInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutProfileImageInput, Prisma.UserUncheckedUpdateWithoutProfileImageInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutProfileImageInput, Prisma.UserUncheckedCreateWithoutProfileImageInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutProfileImageInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutProfileImageInput, Prisma.UserUncheckedUpdateWithoutProfileImageInput>
+}
+
+export type UserUpdateManyWithWhereWithoutProfileImageInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutProfileImageInput>
+}
+
+export type UserCreateWithoutVendorInput = {
+  id?: string
+  name?: string | null
+  email: string
+  passwordHash: string
+  phone?: string | null
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  refundRequests?: Prisma.RefundRequestCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  reviewVotes?: Prisma.ReviewVoteCreateNestedManyWithoutUserInput
+  notificationTargets?: Prisma.NotificationRecipientCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVendorInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -936,6 +1114,7 @@ export type UserUpdateToOneWithWhereWithoutVendorInput = {
 
 export type UserUpdateWithoutVendorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -944,6 +1123,7 @@ export type UserUpdateWithoutVendorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -957,9 +1137,11 @@ export type UserUpdateWithoutVendorInput = {
 
 export type UserUncheckedUpdateWithoutVendorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -978,6 +1160,7 @@ export type UserUncheckedUpdateWithoutVendorInput = {
 
 export type UserCreateWithoutCartsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -986,6 +1169,7 @@ export type UserCreateWithoutCartsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -999,9 +1183,11 @@ export type UserCreateWithoutCartsInput = {
 
 export type UserUncheckedCreateWithoutCartsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -1036,6 +1222,7 @@ export type UserUpdateToOneWithWhereWithoutCartsInput = {
 
 export type UserUpdateWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1044,6 +1231,7 @@ export type UserUpdateWithoutCartsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1057,9 +1245,11 @@ export type UserUpdateWithoutCartsInput = {
 
 export type UserUncheckedUpdateWithoutCartsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1078,6 +1268,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
 
 export type UserCreateWithoutOrdersInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -1086,6 +1277,7 @@ export type UserCreateWithoutOrdersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
@@ -1099,9 +1291,11 @@ export type UserCreateWithoutOrdersInput = {
 
 export type UserUncheckedCreateWithoutOrdersInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -1136,6 +1330,7 @@ export type UserUpdateToOneWithWhereWithoutOrdersInput = {
 
 export type UserUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1144,6 +1339,7 @@ export type UserUpdateWithoutOrdersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -1157,9 +1353,11 @@ export type UserUpdateWithoutOrdersInput = {
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1178,6 +1376,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
 
 export type UserCreateWithoutAddressesInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -1186,6 +1385,7 @@ export type UserCreateWithoutAddressesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
@@ -1199,9 +1399,11 @@ export type UserCreateWithoutAddressesInput = {
 
 export type UserUncheckedCreateWithoutAddressesInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -1236,6 +1438,7 @@ export type UserUpdateToOneWithWhereWithoutAddressesInput = {
 
 export type UserUpdateWithoutAddressesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1244,6 +1447,7 @@ export type UserUpdateWithoutAddressesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -1257,9 +1461,11 @@ export type UserUpdateWithoutAddressesInput = {
 
 export type UserUncheckedUpdateWithoutAddressesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1278,6 +1484,7 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
 
 export type UserCreateWithoutRefundRequestsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -1286,6 +1493,7 @@ export type UserCreateWithoutRefundRequestsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
@@ -1299,9 +1507,11 @@ export type UserCreateWithoutRefundRequestsInput = {
 
 export type UserUncheckedCreateWithoutRefundRequestsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -1336,6 +1546,7 @@ export type UserUpdateToOneWithWhereWithoutRefundRequestsInput = {
 
 export type UserUpdateWithoutRefundRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1344,6 +1555,7 @@ export type UserUpdateWithoutRefundRequestsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -1357,9 +1569,11 @@ export type UserUpdateWithoutRefundRequestsInput = {
 
 export type UserUncheckedUpdateWithoutRefundRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1378,6 +1592,7 @@ export type UserUncheckedUpdateWithoutRefundRequestsInput = {
 
 export type UserCreateWithoutReviewsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -1386,6 +1601,7 @@ export type UserCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
@@ -1399,9 +1615,11 @@ export type UserCreateWithoutReviewsInput = {
 
 export type UserUncheckedCreateWithoutReviewsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -1436,6 +1654,7 @@ export type UserUpdateToOneWithWhereWithoutReviewsInput = {
 
 export type UserUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1444,6 +1663,7 @@ export type UserUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -1457,9 +1677,11 @@ export type UserUpdateWithoutReviewsInput = {
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1478,6 +1700,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
 
 export type UserCreateWithoutReviewVotesInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -1486,6 +1709,7 @@ export type UserCreateWithoutReviewVotesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
@@ -1499,9 +1723,11 @@ export type UserCreateWithoutReviewVotesInput = {
 
 export type UserUncheckedCreateWithoutReviewVotesInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -1536,6 +1762,7 @@ export type UserUpdateToOneWithWhereWithoutReviewVotesInput = {
 
 export type UserUpdateWithoutReviewVotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1544,6 +1771,7 @@ export type UserUpdateWithoutReviewVotesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -1557,9 +1785,11 @@ export type UserUpdateWithoutReviewVotesInput = {
 
 export type UserUncheckedUpdateWithoutReviewVotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1578,6 +1808,7 @@ export type UserUncheckedUpdateWithoutReviewVotesInput = {
 
 export type UserCreateWithoutNotificationTargetsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
@@ -1586,6 +1817,7 @@ export type UserCreateWithoutNotificationTargetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenantId?: string | null
+  profileImage?: Prisma.FileCreateNestedOneWithoutUserProfileImagesInput
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
   filesUploaded?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   carts?: Prisma.CartCreateNestedManyWithoutUserInput
@@ -1599,9 +1831,11 @@ export type UserCreateWithoutNotificationTargetsInput = {
 
 export type UserUncheckedCreateWithoutNotificationTargetsInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   roleId: string
@@ -1636,6 +1870,7 @@ export type UserUpdateToOneWithWhereWithoutNotificationTargetsInput = {
 
 export type UserUpdateWithoutNotificationTargetsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1644,6 +1879,7 @@ export type UserUpdateWithoutNotificationTargetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
@@ -1657,9 +1893,11 @@ export type UserUpdateWithoutNotificationTargetsInput = {
 
 export type UserUncheckedUpdateWithoutNotificationTargetsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1678,9 +1916,11 @@ export type UserUncheckedUpdateWithoutNotificationTargetsInput = {
 
 export type UserCreateManyRoleInput = {
   id?: string
+  name?: string | null
   email: string
   passwordHash: string
   phone?: string | null
+  profileImageFileId?: string | null
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
@@ -1690,6 +1930,7 @@ export type UserCreateManyRoleInput = {
 
 export type UserUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1698,6 +1939,7 @@ export type UserUpdateWithoutRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.FileUpdateOneWithoutUserProfileImagesNestedInput
   filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   carts?: Prisma.CartUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1711,9 +1953,11 @@ export type UserUpdateWithoutRoleInput = {
 
 export type UserUncheckedUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1732,11 +1976,87 @@ export type UserUncheckedUpdateWithoutRoleInput = {
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type UserCreateManyProfileImageInput = {
+  id?: string
+  name?: string | null
+  email: string
+  passwordHash: string
+  phone?: string | null
+  isActive?: boolean
+  isVerified?: boolean
+  roleId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenantId?: string | null
+}
+
+export type UserUpdateWithoutProfileImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  filesUploaded?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  refundRequests?: Prisma.RefundRequestUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  reviewVotes?: Prisma.ReviewVoteUpdateManyWithoutUserNestedInput
+  notificationTargets?: Prisma.NotificationRecipientUpdateManyWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutProfileImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  filesUploaded?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  refundRequests?: Prisma.RefundRequestUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  reviewVotes?: Prisma.ReviewVoteUncheckedUpdateManyWithoutUserNestedInput
+  notificationTargets?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutProfileImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1838,15 +2158,18 @@ export type UserCountOutputTypeCountNotificationTargetsArgs<ExtArgs extends runt
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
   phone?: boolean
+  profileImageFileId?: boolean
   isActive?: boolean
   isVerified?: boolean
   roleId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenantId?: boolean
+  profileImage?: boolean | Prisma.User$profileImageArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
   filesUploaded?: boolean | Prisma.User$filesUploadedArgs<ExtArgs>
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
@@ -1862,37 +2185,45 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
   phone?: boolean
+  profileImageFileId?: boolean
   isActive?: boolean
   isVerified?: boolean
   roleId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenantId?: boolean
+  profileImage?: boolean | Prisma.User$profileImageArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
   phone?: boolean
+  profileImageFileId?: boolean
   isActive?: boolean
   isVerified?: boolean
   roleId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tenantId?: boolean
+  profileImage?: boolean | Prisma.User$profileImageArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
   phone?: boolean
+  profileImageFileId?: boolean
   isActive?: boolean
   isVerified?: boolean
   roleId?: boolean
@@ -1901,8 +2232,9 @@ export type UserSelectScalar = {
   tenantId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "phone" | "isActive" | "isVerified" | "roleId" | "createdAt" | "updatedAt" | "tenantId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "phone" | "profileImageFileId" | "isActive" | "isVerified" | "roleId" | "createdAt" | "updatedAt" | "tenantId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  profileImage?: boolean | Prisma.User$profileImageArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
   filesUploaded?: boolean | Prisma.User$filesUploadedArgs<ExtArgs>
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
@@ -1916,15 +2248,18 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  profileImage?: boolean | Prisma.User$profileImageArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
 }
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  profileImage?: boolean | Prisma.User$profileImageArgs<ExtArgs>
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
 }
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    profileImage: Prisma.$FilePayload<ExtArgs> | null
     role: Prisma.$RolePayload<ExtArgs>
     filesUploaded: Prisma.$FilePayload<ExtArgs>[]
     carts: Prisma.$CartPayload<ExtArgs>[]
@@ -1938,9 +2273,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    name: string | null
     email: string
     passwordHash: string
     phone: string | null
+    profileImageFileId: string | null
     isActive: boolean
     isVerified: boolean
     roleId: string
@@ -2341,6 +2678,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  profileImage<T extends Prisma.User$profileImageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profileImageArgs<ExtArgs>>): Prisma.Prisma__FileClient<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   role<T extends Prisma.RoleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoleDefaultArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   filesUploaded<T extends Prisma.User$filesUploadedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$filesUploadedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   carts<T extends Prisma.User$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2381,9 +2719,11 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
+  readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly profileImageFileId: Prisma.FieldRef<"User", 'String'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly roleId: Prisma.FieldRef<"User", 'String'>
@@ -2788,6 +3128,25 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.profileImage
+ */
+export type User$profileImageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the File
+   */
+  select?: Prisma.FileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the File
+   */
+  omit?: Prisma.FileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInclude<ExtArgs> | null
+  where?: Prisma.FileWhereInput
 }
 
 /**

@@ -264,6 +264,7 @@ export type FileWhereInput = {
   vendorLogos?: Prisma.VendorListRelationFilter
   vendorBanners?: Prisma.VendorListRelationFilter
   categoryImages?: Prisma.CategoryListRelationFilter
+  userProfileImages?: Prisma.UserListRelationFilter
 }
 
 export type FileOrderByWithRelationInput = {
@@ -282,6 +283,7 @@ export type FileOrderByWithRelationInput = {
   vendorLogos?: Prisma.VendorOrderByRelationAggregateInput
   vendorBanners?: Prisma.VendorOrderByRelationAggregateInput
   categoryImages?: Prisma.CategoryOrderByRelationAggregateInput
+  userProfileImages?: Prisma.UserOrderByRelationAggregateInput
 }
 
 export type FileWhereUniqueInput = Prisma.AtLeast<{
@@ -303,6 +305,7 @@ export type FileWhereUniqueInput = Prisma.AtLeast<{
   vendorLogos?: Prisma.VendorListRelationFilter
   vendorBanners?: Prisma.VendorListRelationFilter
   categoryImages?: Prisma.CategoryListRelationFilter
+  userProfileImages?: Prisma.UserListRelationFilter
 }, "id">
 
 export type FileOrderByWithAggregationInput = {
@@ -356,6 +359,7 @@ export type FileCreateInput = {
   vendorLogos?: Prisma.VendorCreateNestedManyWithoutLogoInput
   vendorBanners?: Prisma.VendorCreateNestedManyWithoutBannerInput
   categoryImages?: Prisma.CategoryCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileUncheckedCreateInput = {
@@ -373,6 +377,7 @@ export type FileUncheckedCreateInput = {
   vendorLogos?: Prisma.VendorUncheckedCreateNestedManyWithoutLogoInput
   vendorBanners?: Prisma.VendorUncheckedCreateNestedManyWithoutBannerInput
   categoryImages?: Prisma.CategoryUncheckedCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserUncheckedCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileUpdateInput = {
@@ -390,6 +395,7 @@ export type FileUpdateInput = {
   vendorLogos?: Prisma.VendorUpdateManyWithoutLogoNestedInput
   vendorBanners?: Prisma.VendorUpdateManyWithoutBannerNestedInput
   categoryImages?: Prisma.CategoryUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileUncheckedUpdateInput = {
@@ -407,6 +413,7 @@ export type FileUncheckedUpdateInput = {
   vendorLogos?: Prisma.VendorUncheckedUpdateManyWithoutLogoNestedInput
   vendorBanners?: Prisma.VendorUncheckedUpdateManyWithoutBannerNestedInput
   categoryImages?: Prisma.CategoryUncheckedUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUncheckedUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileCreateManyInput = {
@@ -448,6 +455,11 @@ export type FileUncheckedUpdateManyInput = {
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FileNullableScalarRelationFilter = {
+  is?: Prisma.FileWhereInput | null
+  isNot?: Prisma.FileWhereInput | null
 }
 
 export type FileListRelationFilter = {
@@ -508,9 +520,10 @@ export type FileSumOrderByAggregateInput = {
   size?: Prisma.SortOrder
 }
 
-export type FileNullableScalarRelationFilter = {
-  is?: Prisma.FileWhereInput | null
-  isNot?: Prisma.FileWhereInput | null
+export type FileCreateNestedOneWithoutUserProfileImagesInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutUserProfileImagesInput, Prisma.FileUncheckedCreateWithoutUserProfileImagesInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutUserProfileImagesInput
+  connect?: Prisma.FileWhereUniqueInput
 }
 
 export type FileCreateNestedManyWithoutUploadedByInput = {
@@ -525,6 +538,16 @@ export type FileUncheckedCreateNestedManyWithoutUploadedByInput = {
   connectOrCreate?: Prisma.FileCreateOrConnectWithoutUploadedByInput | Prisma.FileCreateOrConnectWithoutUploadedByInput[]
   createMany?: Prisma.FileCreateManyUploadedByInputEnvelope
   connect?: Prisma.FileWhereUniqueInput | Prisma.FileWhereUniqueInput[]
+}
+
+export type FileUpdateOneWithoutUserProfileImagesNestedInput = {
+  create?: Prisma.XOR<Prisma.FileCreateWithoutUserProfileImagesInput, Prisma.FileUncheckedCreateWithoutUserProfileImagesInput>
+  connectOrCreate?: Prisma.FileCreateOrConnectWithoutUserProfileImagesInput
+  upsert?: Prisma.FileUpsertWithoutUserProfileImagesInput
+  disconnect?: Prisma.FileWhereInput | boolean
+  delete?: Prisma.FileWhereInput | boolean
+  connect?: Prisma.FileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FileUpdateToOneWithWhereWithoutUserProfileImagesInput, Prisma.FileUpdateWithoutUserProfileImagesInput>, Prisma.FileUncheckedUpdateWithoutUserProfileImagesInput>
 }
 
 export type FileUpdateManyWithoutUploadedByNestedInput = {
@@ -611,6 +634,45 @@ export type FileUpdateOneWithoutCategoryImagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FileUpdateToOneWithWhereWithoutCategoryImagesInput, Prisma.FileUpdateWithoutCategoryImagesInput>, Prisma.FileUncheckedUpdateWithoutCategoryImagesInput>
 }
 
+export type FileCreateWithoutUserProfileImagesInput = {
+  id?: string
+  originalName: string
+  mimeType: string
+  size: number
+  provider: string
+  path: string
+  url: string
+  meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tenantId?: string | null
+  createdAt?: Date | string
+  uploadedBy?: Prisma.UserCreateNestedOneWithoutFilesUploadedInput
+  vendorLogos?: Prisma.VendorCreateNestedManyWithoutLogoInput
+  vendorBanners?: Prisma.VendorCreateNestedManyWithoutBannerInput
+  categoryImages?: Prisma.CategoryCreateNestedManyWithoutImageInput
+}
+
+export type FileUncheckedCreateWithoutUserProfileImagesInput = {
+  id?: string
+  originalName: string
+  mimeType: string
+  size: number
+  provider: string
+  path: string
+  url: string
+  uploadedById?: string | null
+  meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tenantId?: string | null
+  createdAt?: Date | string
+  vendorLogos?: Prisma.VendorUncheckedCreateNestedManyWithoutLogoInput
+  vendorBanners?: Prisma.VendorUncheckedCreateNestedManyWithoutBannerInput
+  categoryImages?: Prisma.CategoryUncheckedCreateNestedManyWithoutImageInput
+}
+
+export type FileCreateOrConnectWithoutUserProfileImagesInput = {
+  where: Prisma.FileWhereUniqueInput
+  create: Prisma.XOR<Prisma.FileCreateWithoutUserProfileImagesInput, Prisma.FileUncheckedCreateWithoutUserProfileImagesInput>
+}
+
 export type FileCreateWithoutUploadedByInput = {
   id?: string
   originalName: string
@@ -625,6 +687,7 @@ export type FileCreateWithoutUploadedByInput = {
   vendorLogos?: Prisma.VendorCreateNestedManyWithoutLogoInput
   vendorBanners?: Prisma.VendorCreateNestedManyWithoutBannerInput
   categoryImages?: Prisma.CategoryCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileUncheckedCreateWithoutUploadedByInput = {
@@ -641,6 +704,7 @@ export type FileUncheckedCreateWithoutUploadedByInput = {
   vendorLogos?: Prisma.VendorUncheckedCreateNestedManyWithoutLogoInput
   vendorBanners?: Prisma.VendorUncheckedCreateNestedManyWithoutBannerInput
   categoryImages?: Prisma.CategoryUncheckedCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserUncheckedCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileCreateOrConnectWithoutUploadedByInput = {
@@ -651,6 +715,51 @@ export type FileCreateOrConnectWithoutUploadedByInput = {
 export type FileCreateManyUploadedByInputEnvelope = {
   data: Prisma.FileCreateManyUploadedByInput | Prisma.FileCreateManyUploadedByInput[]
   skipDuplicates?: boolean
+}
+
+export type FileUpsertWithoutUserProfileImagesInput = {
+  update: Prisma.XOR<Prisma.FileUpdateWithoutUserProfileImagesInput, Prisma.FileUncheckedUpdateWithoutUserProfileImagesInput>
+  create: Prisma.XOR<Prisma.FileCreateWithoutUserProfileImagesInput, Prisma.FileUncheckedCreateWithoutUserProfileImagesInput>
+  where?: Prisma.FileWhereInput
+}
+
+export type FileUpdateToOneWithWhereWithoutUserProfileImagesInput = {
+  where?: Prisma.FileWhereInput
+  data: Prisma.XOR<Prisma.FileUpdateWithoutUserProfileImagesInput, Prisma.FileUncheckedUpdateWithoutUserProfileImagesInput>
+}
+
+export type FileUpdateWithoutUserProfileImagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  originalName?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  path?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uploadedBy?: Prisma.UserUpdateOneWithoutFilesUploadedNestedInput
+  vendorLogos?: Prisma.VendorUpdateManyWithoutLogoNestedInput
+  vendorBanners?: Prisma.VendorUpdateManyWithoutBannerNestedInput
+  categoryImages?: Prisma.CategoryUpdateManyWithoutImageNestedInput
+}
+
+export type FileUncheckedUpdateWithoutUserProfileImagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  originalName?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  path?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vendorLogos?: Prisma.VendorUncheckedUpdateManyWithoutLogoNestedInput
+  vendorBanners?: Prisma.VendorUncheckedUpdateManyWithoutBannerNestedInput
+  categoryImages?: Prisma.CategoryUncheckedUpdateManyWithoutImageNestedInput
 }
 
 export type FileUpsertWithWhereUniqueWithoutUploadedByInput = {
@@ -700,6 +809,7 @@ export type FileCreateWithoutVendorLogosInput = {
   uploadedBy?: Prisma.UserCreateNestedOneWithoutFilesUploadedInput
   vendorBanners?: Prisma.VendorCreateNestedManyWithoutBannerInput
   categoryImages?: Prisma.CategoryCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileUncheckedCreateWithoutVendorLogosInput = {
@@ -716,6 +826,7 @@ export type FileUncheckedCreateWithoutVendorLogosInput = {
   createdAt?: Date | string
   vendorBanners?: Prisma.VendorUncheckedCreateNestedManyWithoutBannerInput
   categoryImages?: Prisma.CategoryUncheckedCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserUncheckedCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileCreateOrConnectWithoutVendorLogosInput = {
@@ -737,6 +848,7 @@ export type FileCreateWithoutVendorBannersInput = {
   uploadedBy?: Prisma.UserCreateNestedOneWithoutFilesUploadedInput
   vendorLogos?: Prisma.VendorCreateNestedManyWithoutLogoInput
   categoryImages?: Prisma.CategoryCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileUncheckedCreateWithoutVendorBannersInput = {
@@ -753,6 +865,7 @@ export type FileUncheckedCreateWithoutVendorBannersInput = {
   createdAt?: Date | string
   vendorLogos?: Prisma.VendorUncheckedCreateNestedManyWithoutLogoInput
   categoryImages?: Prisma.CategoryUncheckedCreateNestedManyWithoutImageInput
+  userProfileImages?: Prisma.UserUncheckedCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileCreateOrConnectWithoutVendorBannersInput = {
@@ -785,6 +898,7 @@ export type FileUpdateWithoutVendorLogosInput = {
   uploadedBy?: Prisma.UserUpdateOneWithoutFilesUploadedNestedInput
   vendorBanners?: Prisma.VendorUpdateManyWithoutBannerNestedInput
   categoryImages?: Prisma.CategoryUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileUncheckedUpdateWithoutVendorLogosInput = {
@@ -801,6 +915,7 @@ export type FileUncheckedUpdateWithoutVendorLogosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendorBanners?: Prisma.VendorUncheckedUpdateManyWithoutBannerNestedInput
   categoryImages?: Prisma.CategoryUncheckedUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUncheckedUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileUpsertWithoutVendorBannersInput = {
@@ -828,6 +943,7 @@ export type FileUpdateWithoutVendorBannersInput = {
   uploadedBy?: Prisma.UserUpdateOneWithoutFilesUploadedNestedInput
   vendorLogos?: Prisma.VendorUpdateManyWithoutLogoNestedInput
   categoryImages?: Prisma.CategoryUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileUncheckedUpdateWithoutVendorBannersInput = {
@@ -844,6 +960,7 @@ export type FileUncheckedUpdateWithoutVendorBannersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendorLogos?: Prisma.VendorUncheckedUpdateManyWithoutLogoNestedInput
   categoryImages?: Prisma.CategoryUncheckedUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUncheckedUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileCreateWithoutCategoryImagesInput = {
@@ -860,6 +977,7 @@ export type FileCreateWithoutCategoryImagesInput = {
   uploadedBy?: Prisma.UserCreateNestedOneWithoutFilesUploadedInput
   vendorLogos?: Prisma.VendorCreateNestedManyWithoutLogoInput
   vendorBanners?: Prisma.VendorCreateNestedManyWithoutBannerInput
+  userProfileImages?: Prisma.UserCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileUncheckedCreateWithoutCategoryImagesInput = {
@@ -876,6 +994,7 @@ export type FileUncheckedCreateWithoutCategoryImagesInput = {
   createdAt?: Date | string
   vendorLogos?: Prisma.VendorUncheckedCreateNestedManyWithoutLogoInput
   vendorBanners?: Prisma.VendorUncheckedCreateNestedManyWithoutBannerInput
+  userProfileImages?: Prisma.UserUncheckedCreateNestedManyWithoutProfileImageInput
 }
 
 export type FileCreateOrConnectWithoutCategoryImagesInput = {
@@ -908,6 +1027,7 @@ export type FileUpdateWithoutCategoryImagesInput = {
   uploadedBy?: Prisma.UserUpdateOneWithoutFilesUploadedNestedInput
   vendorLogos?: Prisma.VendorUpdateManyWithoutLogoNestedInput
   vendorBanners?: Prisma.VendorUpdateManyWithoutBannerNestedInput
+  userProfileImages?: Prisma.UserUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileUncheckedUpdateWithoutCategoryImagesInput = {
@@ -924,6 +1044,7 @@ export type FileUncheckedUpdateWithoutCategoryImagesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendorLogos?: Prisma.VendorUncheckedUpdateManyWithoutLogoNestedInput
   vendorBanners?: Prisma.VendorUncheckedUpdateManyWithoutBannerNestedInput
+  userProfileImages?: Prisma.UserUncheckedUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileCreateManyUploadedByInput = {
@@ -953,6 +1074,7 @@ export type FileUpdateWithoutUploadedByInput = {
   vendorLogos?: Prisma.VendorUpdateManyWithoutLogoNestedInput
   vendorBanners?: Prisma.VendorUpdateManyWithoutBannerNestedInput
   categoryImages?: Prisma.CategoryUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileUncheckedUpdateWithoutUploadedByInput = {
@@ -969,6 +1091,7 @@ export type FileUncheckedUpdateWithoutUploadedByInput = {
   vendorLogos?: Prisma.VendorUncheckedUpdateManyWithoutLogoNestedInput
   vendorBanners?: Prisma.VendorUncheckedUpdateManyWithoutBannerNestedInput
   categoryImages?: Prisma.CategoryUncheckedUpdateManyWithoutImageNestedInput
+  userProfileImages?: Prisma.UserUncheckedUpdateManyWithoutProfileImageNestedInput
 }
 
 export type FileUncheckedUpdateManyWithoutUploadedByInput = {
@@ -993,12 +1116,14 @@ export type FileCountOutputType = {
   vendorLogos: number
   vendorBanners: number
   categoryImages: number
+  userProfileImages: number
 }
 
 export type FileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendorLogos?: boolean | FileCountOutputTypeCountVendorLogosArgs
   vendorBanners?: boolean | FileCountOutputTypeCountVendorBannersArgs
   categoryImages?: boolean | FileCountOutputTypeCountCategoryImagesArgs
+  userProfileImages?: boolean | FileCountOutputTypeCountUserProfileImagesArgs
 }
 
 /**
@@ -1032,6 +1157,13 @@ export type FileCountOutputTypeCountCategoryImagesArgs<ExtArgs extends runtime.T
   where?: Prisma.CategoryWhereInput
 }
 
+/**
+ * FileCountOutputType without action
+ */
+export type FileCountOutputTypeCountUserProfileImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
+}
+
 
 export type FileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1049,6 +1181,7 @@ export type FileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   vendorLogos?: boolean | Prisma.File$vendorLogosArgs<ExtArgs>
   vendorBanners?: boolean | Prisma.File$vendorBannersArgs<ExtArgs>
   categoryImages?: boolean | Prisma.File$categoryImagesArgs<ExtArgs>
+  userProfileImages?: boolean | Prisma.File$userProfileImagesArgs<ExtArgs>
   _count?: boolean | Prisma.FileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["file"]>
 
@@ -1102,6 +1235,7 @@ export type FileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   vendorLogos?: boolean | Prisma.File$vendorLogosArgs<ExtArgs>
   vendorBanners?: boolean | Prisma.File$vendorBannersArgs<ExtArgs>
   categoryImages?: boolean | Prisma.File$categoryImagesArgs<ExtArgs>
+  userProfileImages?: boolean | Prisma.File$userProfileImagesArgs<ExtArgs>
   _count?: boolean | Prisma.FileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1118,6 +1252,7 @@ export type $FilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     vendorLogos: Prisma.$VendorPayload<ExtArgs>[]
     vendorBanners: Prisma.$VendorPayload<ExtArgs>[]
     categoryImages: Prisma.$CategoryPayload<ExtArgs>[]
+    userProfileImages: Prisma.$UserPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1529,6 +1664,7 @@ export interface Prisma__FileClient<T, Null = never, ExtArgs extends runtime.Typ
   vendorLogos<T extends Prisma.File$vendorLogosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$vendorLogosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   vendorBanners<T extends Prisma.File$vendorBannersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$vendorBannersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   categoryImages<T extends Prisma.File$categoryImagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$categoryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userProfileImages<T extends Prisma.File$userProfileImagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.File$userProfileImagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2058,6 +2194,30 @@ export type File$categoryImagesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.CategoryScalarFieldEnum | Prisma.CategoryScalarFieldEnum[]
+}
+
+/**
+ * File.userProfileImages
+ */
+export type File$userProfileImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**
