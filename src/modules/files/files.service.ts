@@ -1,17 +1,20 @@
 import { FileStorageService } from './storage/file-storage.service';
+import { ENV_DEFAULTS, ENV_KEYS } from '../../config/env.constants';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { StorageProvider } from './storage/file-storage.interface';
 import { PrismaService } from '../../database/prisma.service';
+import {
+  ForbiddenException,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma } from '../../generated/prisma/client';
-import { Express } from 'express';
 import { ConfigService } from '@nestjs/config';
 import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
-
-type UploadFileBody = {
-  folder?: string;
-};
+  DeletedFileResponse,
+  UploadedFileResponse,
+  UploadFileOptions,
+} from './files.types';
 
 @Injectable()
 export class FilesService {
@@ -23,29 +26,38 @@ export class FilesService {
     private readonly configService: ConfigService,
   ) {
     this.storageRootFolder = this.sanitizePathSegment(
-      this.configService.get<string>('FILE_STORAGE_ROOT_FOLDER') ??
-        'marketplace-core',
+      this.configService.get<string>(ENV_KEYS.FILE_STORAGE_ROOT_FOLDER) ??
+        ENV_DEFAULTS.FILE_STORAGE_ROOT_FOLDER,
     );
   }
 
-  async uploadUserImage(
+  async uploadFile(
     userId: string,
     file: Express.Multer.File,
-    body: UploadFileBody = {},
-  ) {
+    options: UploadFileOptions,
+  ): Promise<UploadedFileResponse> {
     if (!file) throw new BadRequestException('file is required');
     if (!file.buffer || !file.originalname || !file.mimetype) {
       throw new BadRequestException('invalid file payload');
     }
-    if (!file.mimetype.startsWith('image/')) {
-      throw new BadRequestException('Only image files are allowed');
+    if (!options?.folder) throw new BadRequestException('folder is required');
+
+    if (options.allowedMimePrefixes?.length) {
+      const allowed = options.allowedMimePrefixes.some((prefix) =>
+        file.mimetype.startsWith(prefix),
+      );
+      if (!allowed) {
+        throw new BadRequestException(
+          `Unsupported file type: ${file.mimetype}`,
+        );
+      }
     }
 
     const uploaded = await this.fileStorageService.upload({
       buffer: file.buffer as Buffer,
       originalName: file.originalname as string,
       mimeType: file.mimetype as string,
-      folder: this.buildStorageFolder(body.folder ?? 'user-profiles'),
+      folder: this.buildStorageFolder(options.folder),
     });
 
     const created = await this.prisma.file.create({
@@ -73,15 +85,64 @@ export class FilesService {
       },
     });
 
-    if (!created) {
+    if (!created)
       throw new InternalServerErrorException('Failed to save uploaded file');
+
+    return {
+      ...created,
+      provider: created.provider as StorageProvider,
+    };
+  }
+
+  async deleteFile(
+    userId: string,
+    fileId: string,
+  ): Promise<DeletedFileResponse> {
+    const file = await this.prisma.file.findUnique({
+      where: { id: fileId },
+      select: {
+        id: true,
+        uploadedById: true,
+        provider: true,
+        path: true,
+        meta: true,
+      },
+    });
+
+    if (!file) {
+      throw new NotFoundException('File not found');
     }
 
-    return created;
+    if (file.uploadedById && file.uploadedById !== userId) {
+      throw new ForbiddenException(
+        'You do not have access to delete this file',
+      );
+    }
+
+    const storageResult = await this.fileStorageService.delete(
+      {
+        path: file.path,
+        meta: (file.meta as Record<string, unknown> | null) ?? undefined,
+      },
+      file.provider,
+    );
+
+    await this.prisma.file.delete({
+      where: { id: file.id },
+    });
+
+    return {
+      id: file.id,
+      provider: storageResult.provider,
+      deleted: storageResult.deleted,
+    };
   }
 
   private buildStorageFolder(folder: string): string {
     const sanitizedFolder = this.sanitizePathSegment(folder);
+    if (!sanitizedFolder) {
+      throw new BadRequestException('folder cannot be empty');
+    }
     return `/${this.storageRootFolder}/${sanitizedFolder}`;
   }
 

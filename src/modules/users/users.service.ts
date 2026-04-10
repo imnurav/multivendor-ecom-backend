@@ -1,3 +1,4 @@
+import { FileModuleFolder } from '../files/storage/file-storage.interface';
 import { UpdateMeProfileDto } from './dto/update-me-profile.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
@@ -45,8 +46,9 @@ export class UsersService {
     image?: Express.Multer.File,
   ) {
     const uploadedImage = image
-      ? await this.filesService.uploadUserImage(userId, image, {
-          folder: 'user-profiles',
+      ? await this.filesService.uploadFile(userId, image, {
+          folder: FileModuleFolder.USER_PROFILE,
+          allowedMimePrefixes: ['image/'],
         })
       : null;
 

@@ -1,19 +1,24 @@
+import { FileStorageProvider, StorageProvider } from './file-storage.interface';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ENV_KEYS } from '../../../config/env.constants';
+import ImageKit, { toFile } from '@imagekit/nodejs';
+import { ConfigService } from '@nestjs/config';
+import { randomUUID } from 'crypto';
 import {
-  FileStorageProvider,
+  FileDeleteInput,
+  FileDeleteOutput,
   FileUploadInput,
   FileUploadOutput,
 } from './file-storage.interface';
-import ImageKit, { toFile } from '@imagekit/nodejs';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { randomUUID } from 'crypto';
 
 @Injectable()
-export class ImagekitStorageProvider implements FileStorageProvider {
+export class ImageKitStorageProvider implements FileStorageProvider {
   constructor(private readonly configService: ConfigService) {}
 
-  async upload(input: FileUploadInput): Promise<FileUploadOutput> {
-    const privateKey = this.configService.get<string>('IMAGEKIT_PRIVATE_KEY');
+  private getClient(): ImageKit {
+    const privateKey = this.configService.get<string>(
+      ENV_KEYS.IMAGEKIT_PRIVATE_KEY,
+    );
 
     if (!privateKey) {
       throw new InternalServerErrorException(
@@ -21,9 +26,13 @@ export class ImagekitStorageProvider implements FileStorageProvider {
       );
     }
 
+    return new ImageKit({ privateKey });
+  }
+
+  async upload(input: FileUploadInput): Promise<FileUploadOutput> {
     const sanitizedOriginalName = input.originalName.replace(/\s+/g, '-');
     const fileName = `${randomUUID()}-${sanitizedOriginalName}`;
-    const client = new ImageKit({ privateKey });
+    const client = this.getClient();
 
     const uploadedFile = await toFile(input.buffer, fileName);
 
@@ -35,7 +44,7 @@ export class ImagekitStorageProvider implements FileStorageProvider {
     });
 
     return {
-      provider: 'imagekit',
+      provider: StorageProvider.IMAGEKIT,
       path: result.filePath,
       url: result.url,
       size: result.size ?? input.buffer.byteLength,
@@ -45,6 +54,23 @@ export class ImagekitStorageProvider implements FileStorageProvider {
         width: result.width,
         height: result.height,
       },
+    };
+  }
+
+  async delete(input: FileDeleteInput): Promise<FileDeleteOutput> {
+    const fileId = input.meta?.fileId;
+    if (!fileId || typeof fileId !== 'string') {
+      throw new InternalServerErrorException(
+        'ImageKit delete requires fileId in file meta',
+      );
+    }
+
+    const client = this.getClient();
+    await client.files.delete(fileId);
+
+    return {
+      provider: StorageProvider.IMAGEKIT,
+      deleted: true,
     };
   }
 }
